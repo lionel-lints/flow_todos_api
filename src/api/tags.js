@@ -6,8 +6,8 @@ export default ({ config, db }) => resource({
   /** Property name to store preloaded entity on `request`. */
   id : 'facet',
 
-  /* For requests with an `id`, you can auto-load the entity.
-   * Errors terminate the request, success sets `req[id] = data`.
+  /** For requests with an `id`, you can auto-load the entity.
+   *  Errors terminate the request, success sets `req[id] = data`.
    */
   load(req, id, callback) {
     let facet = facets.find( facet => facet.id===id ),
@@ -17,6 +17,7 @@ export default ({ config, db }) => resource({
 
   /** GET / - List all entities */
   index({ params }, res) {
+    console.log("this is happening");
     res.json(facets);
   },
 

@@ -32,6 +32,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "helmet": "^3.1.0",
+    "knex": "^0.12.6",
     "resource-router-middleware": "^0.5.1"
   },
   "devDependencies": {
