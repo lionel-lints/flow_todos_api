@@ -1,3 +1,9 @@
+# fLoW ToDoS
+
+This app is the api server for a small app with React on the front end to create and use a todo list that tracks your energy, engagement, and flow.
+
+The api was first seeded from the [express-es6-rest-api](https://github.com/developit/express-es6-rest-api) and was adapted for use with postgres.
+
 Express & ES6 REST API Boilerplate
 ==================================
 
