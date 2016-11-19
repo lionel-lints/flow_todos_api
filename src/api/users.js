@@ -1,51 +1,58 @@
 import resource from 'resource-router-middleware';
-import facets from '../models/facets';
+import users from '../models/users';
 
 export default ({ config, db }) => resource({
-
   /** Property name to store preloaded entity on `request`. */
-  id : 'facet',
+  id : 'user',
 
-  /** For requests with an `id`, you can auto-load the entity.
+  /* For requests with an `id`, you can auto-load the entity.
    *  Errors terminate the request, success sets `req[id] = data`.
    */
   load(req, id, callback) {
-    let facet = facets.find( facet => facet.id===id ),
-      err = facet ? null : 'Not found';
-    callback(err, facet);
+
+    let user = users(db).where({id: id});
+    let err = user ? null : 'Not found';
+    callback(err, user);
   },
 
   /** GET / - List all entities */
   index({ params }, res) {
-    console.log("this is happening");
-    res.json(facets);
+    users(db).select().then( usersArray => {
+      res.json(usersArray);
+    });
   },
 
   /** POST / - Create a new entity */
   create({ body }, res) {
-    body.id = facets.length.toString(36);
-    facets.push(body);
-    res.json(body);
+    users(db).insert(body).returning('id').then( user => {
+      res.json(body);
+    });
   },
 
   /** GET /:id - Return a given entity */
-  read({ facet }, res) {
-    res.json(facet);
+  read({ user }, res) {
+    user.select().then( returnedUser => {
+      res.json(returnedUser);
+    });
   },
 
   /** PUT /:id - Update a given entity */
-  update({ facet, body }, res) {
+  update({ user, body }, res) {
+    let updatedUser = {};
     for (let key in body) {
       if (key!=='id') {
-        facet[key] = body[key];
+        updatedUser[key] = body[key];
       }
     }
-    res.sendStatus(204);
+    user.update(updatedUser).then( returnedUser => {
+      res.json(returnedUser);
+    })
   },
 
   /** DELETE /:id - Delete a given entity */
-  delete({ facet }, res) {
-    facets.splice(facets.indexOf(facet), 1);
-    res.sendStatus(204);
+  delete({ user }, res) {
+    user.del().then( status => {
+      res.sendStatus(200);
+    });
   }
 });

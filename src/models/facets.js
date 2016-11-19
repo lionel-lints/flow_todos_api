@@ -1,3 +1,3 @@
 // our example model is just an Array
-const facets = ['things', 'are', 'here'];
+const facets = ['facets', 'are resourced', 'here'];
 export default facets;
