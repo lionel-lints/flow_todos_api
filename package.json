@@ -8,22 +8,8 @@
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
     "prestart": "npm run -s build",
-    "lint": "eslint src",
+    "lint": "eslint ./src/*",
     "test": "mocha --compilers js:babel-core/register ./test/*.js"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    },
-    "env": {
-      "node": true
-    },
-    "rules": {
-      "no-console": 0,
-      "no-unused-vars": 1
-    }
   },
   "author": "lionel lints",
   "license": "MIT",
@@ -48,7 +34,11 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
-    "eslint": "^3.1.1",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
     "mocha": "^3.1.2",
     "nodemon": "^1.9.2",
     "supertest": "^2.0.1"
