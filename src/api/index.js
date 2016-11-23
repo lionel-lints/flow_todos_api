@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router as router } from 'express';
 import { version } from '../../package.json';
 import users from './users';
 import todos from './todos';
 
 export default ({ config, db }) => {
-  const api = Router();
+  const api = router();
 
   // mount the facets resource
   api.use('/users', users({ config, db }));
