@@ -1,51 +1,66 @@
 import resource from 'resource-router-middleware';
-import facets from '../models/facets';
+import users from '../models/users';
+import todos from '../models/todos';
 
-export default ({ config, db }) => resource({
+/* eslint-disable no-unused-vars*/
+export default ({ config, db }) => {
+  resource({
+    /* Property name to store preloaded entity on `request`. */
+    id: 'todo',
+    userId: 'user',
 
-  /** Property name to store preloaded entity on `request`. */
-  id : 'facet',
+    /* For requests with an `id`, you can auto-load the entity.
+     *  Errors terminate the request, success sets `req[id] = data`.
+     */
+    load(req, id, userId, callback) {
+      const user = users(db).where({ userId });
+      const todo = todos(db).where({ id }).andWhere('user', userId);
+      const err = todo && user ? null : 'Not found';
+      callback(err, todo);
+    },
 
-  /** For requests with an `id`, you can auto-load the entity.
-   *  Errors terminate the request, success sets `req[id] = data`.
-   */
-  load(req, id, callback) {
-    let facet = facets.find( facet => facet.id===id ),
-      err = facet ? null : 'Not found';
-    callback(err, facet);
-  },
+    /* GET / - List all entities */
+    index({ params }, res) {
+      todos(db).select().then((usersTodoArray) => {
+        res.json(usersTodoArray);
+      });
+    },
 
-  /** GET / - List all entities */
-  index({ params }, res) {
-    console.log("this is happening");
-    res.json(facets);
-  },
+    /* POST / - Create a new entity */
+    create({ body }, res) {
+      todos(db).insert(body).returning('id').then(() => {
+        res.json(body);
+      });
+    },
 
-  /** POST / - Create a new entity */
-  create({ body }, res) {
-    body.id = facets.length.toString(36);
-    facets.push(body);
-    res.json(body);
-  },
+    /* GET /:id - Return a given entity */
+    read({ todo }, res) {
+      todo.select().then((returnedUser) => {
+        res.json(returnedUser);
+      });
+    },
 
-  /** GET /:id - Return a given entity */
-  read({ facet }, res) {
-    res.json(facet);
-  },
+    /* PUT /:id - Update a given entity */
+    update({ todo, body }, res) {
+      const updatedUser = {};
+      const keyArray = Object.keys(body).filter((key) => {
+        return key !== 'id';
+      });
 
-  /** PUT /:id - Update a given entity */
-  update({ facet, body }, res) {
-    for (let key in body) {
-      if (key!=='id') {
-        facet[key] = body[key];
+      for (const key of keyArray) {
+        updatedUser[key] = body[key];
       }
-    }
-    res.sendStatus(204);
-  },
 
-  /** DELETE /:id - Delete a given entity */
-  delete({ facet }, res) {
-    facets.splice(facets.indexOf(facet), 1);
-    res.sendStatus(204);
-  }
-});
+      todo.update(updatedUser).then((returnedUser) => {
+        res.json(returnedUser);
+      });
+    },
+
+    /* DELETE /:id - Delete a given entity */
+    delete({ todo }, res) {
+      todo.del().then((status) => {
+        res.sendStatus(status);
+      });
+    },
+  });
+};
