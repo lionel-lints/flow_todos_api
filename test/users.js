@@ -1,13 +1,14 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import app from '../src/index';
-import knex from '../src/db';
 import env from 'dotenv';
 
-env.config({NODE_ENV: 'test'});
+import app from '../src/index';
+import knex from '../src/db';
+
+env.config({ NODE_ENV: 'test' });
 
 describe('GET /api/users', () => {
-  it('responds with JSON', done => {
+  it('responds with JSON', (done) => {
     request(app)
       .get('/api/users')
       .expect('Content-Type', /json/)
@@ -16,8 +17,8 @@ describe('GET /api/users', () => {
 });
 
 xdescribe('GET /api/users/:id', () => {
-  it('responds with JSON of a user', done => {
-    
+  it('responds with JSON of a user', (done) => {
+
   });
 });
 
