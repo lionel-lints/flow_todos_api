@@ -13,8 +13,10 @@ module.exports = {
   rules: {
     "no-console": 1,
     "no-unused-vars": 1,
+
     /* Fat arrow curly braces used */
     "arrow-body-style": ["error", "always"],
+
     /* Allow undefined returns due to Express res object */
     "consistent-return": 0  
   }
