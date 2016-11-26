@@ -4,12 +4,12 @@
   "description": "Express API for a small todo app that tracks your flow.",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "dev": "NODE_ENV=development nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
     "prestart": "npm run -s build",
     "lint": "eslint ./src/*",
-    "test": "mocha --compilers js:babel-core/register ./test/*.js"
+    "test":  "NODE_ENV=test mocha --compilers js:babel-core/register ./test/*.js"
   },
   "author": "lionel lints",
   "license": "MIT",

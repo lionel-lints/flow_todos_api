@@ -1,3 +1,5 @@
+const path = require('path');
+
 const config = {
   development: {
     client: 'pg',
@@ -8,9 +10,14 @@ const config = {
   test: {
     client: 'pg',
     connection: {
-      database: 'postgres://localhost/flow_todo_test',
+      database: 'flow_todo_test',
     },
-    debug: true,
+    migrations: {
+      directory: path.join(__dirname, '../db/migrations'),
+    },
+    seeds: {
+      directory: path.join(__dirname, '../db/seeds'),
+    },
   },
   production: {
     client: 'pg',
@@ -18,4 +25,4 @@ const config = {
   },
 };
 
-export default config;
+module.exports = config;

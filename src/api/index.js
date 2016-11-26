@@ -5,11 +5,11 @@ import todos from './todos';
 
 export default ({ config, db }) => {
   const api = router();
+  const todoRouter = router({mergeParams: true});
 
-  // mount the facets resource
+  // mount the resources
   api.use('/users', users({ config, db }));
-
-  api.use('/todos', todos({ config, db }));
+  api.use('/:userId/todos', todoRouter.use(todos({ config, db })));
 
   // perhaps expose some API metadata at the root
   api.get('/', (req, res) => {

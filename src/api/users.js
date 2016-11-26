@@ -26,7 +26,7 @@ export default ({ config, db }) => resource({
   /* POST / - Create a new entity */
   create({ body }, res) {
     users(db).insert(body).returning('id').then(() => {
-      res.json(body);
+      res.status(201).json(body);
     });
   },
 
@@ -56,7 +56,7 @@ export default ({ config, db }) => resource({
   /* DELETE /:id - Delete a given entity */
   delete({ user }, res) {
     user.del().then((status) => {
-      res.sendStatus(status);
+      res.sendStatus(204);
     });
   },
 });

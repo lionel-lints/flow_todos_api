@@ -7,12 +7,12 @@ import todos from '../models/todos';
 export default ({ config, db }) => resource({
   /* Property name to store preloaded entity on `request`. */
   id: 'todo',
-  userId: 'user',
+  // userId: 'user',
 
   /* For requests with an `id`, you can auto-load the entity.
    *  Errors terminate the request, success sets `req[id] = data`.
    */
-  load(req, id, userId, callback) {
+  load(req, id, userId, callback) {    
     const user = users(db).where({ userId });
     const todo = todos(db).where({ id }).andWhere('user', userId);
     const err = todo && user ? null : 'Not found';
