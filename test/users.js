@@ -38,15 +38,39 @@ describe('user api routes', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(4);
-          expect(res.body[0]).to.be.a('object');
-          expect(res.body[0]).to.have.property('first_name');
-          expect(res.body[0]['first_name']).to.equal('lionel');
-          expect(res.body[0]).to.have.property('last_name');
-          expect(res.body[0]['last_name']).to.equal('lints');
-          expect(res.body[3]).to.have.property('first_name');
-          expect(res.body[3]['first_name']).to.equal('adam');
-          expect(res.body[3]).to.have.property('last_name');
-          expect(res.body[3]['last_name']).to.equal('lichty');
+          expect(res.body).to.include({ 
+            id: 3,
+            first_name: 'chris',
+            last_name: 'burkhart',
+            github_id: '53454',
+            avatar_url: 'https://avatars.githubusercontent.com/u/53454?v=3',
+            email: 'chris.someone@example.com'
+          });
+          expect(res.body).to.include({ 
+            id: 2,
+            first_name: 'cj',
+            last_name: 'reynolds',
+            github_id: '14241866',
+            avatar_url: 'https://avatars.githubusercontent.com/u/14241866?v=3',
+            email: 'cj.someone@example.com' 
+          });
+
+          expect(res.body).to.include({ 
+            id: 4,
+            first_name: 'adam',
+            last_name: 'lichty',
+            github_id: '5067571',
+            avatar_url: 'https://avatars.githubusercontent.com/u/5067571?v=3',
+            email: 'adam.someone@example.com' 
+          });
+          expect(res.body).to.include({
+            id: 1,
+            first_name: 'lionel',
+            last_name: 'lints',
+            github_id: '13045341',
+            avatar_url: 'https://avatars.githubusercontent.com/u/13045341?v=3',
+            email: 'lionel.lints@gmail.com',
+          });
           done();
         });
     });
@@ -62,11 +86,14 @@ describe('user api routes', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(1);
-          expect(res.body[0]).to.be.a('object');
-          expect(res.body[0]).to.have.property('first_name');
-          expect(res.body[0]['first_name']).to.equal('lionel');
-          expect(res.body[0]).to.have.property('last_name');
-          expect(res.body[0]['last_name']).to.equal('lints');
+          expect(res.body).to.include({
+            id: 1,
+            first_name: 'lionel',
+            last_name: 'lints',
+            github_id: '13045341',
+            avatar_url: 'https://avatars.githubusercontent.com/u/13045341?v=3',
+            email: 'lionel.lints@gmail.com',
+          });
           done();
         });
     });
@@ -88,10 +115,13 @@ describe('user api routes', () => {
           if (err) return done(err);
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('github_id');
-          expect(res.body['github_id']).to.equal('506571');
-          expect(res.body).to.have.property('last_name');
-          expect(res.body['last_name']).to.equal('lastTest');
+          expect(res.body).to.include({ 
+            first_name:"testUser",
+            last_name:"lastTest",
+            github_id:"506571",
+            avatar_url:"https://avatars.githubusercontent.com/u/5067571?v=3",
+            email:"adam.someone@example.com"
+          });
           done();
         })
     });
@@ -115,12 +145,12 @@ describe('user api routes', () => {
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(1);
           expect(res.body[0]).to.be.a('object');
-          expect(res.body[0]).to.have.property('id');
-          expect(res.body[0]['id']).to.equal(1);
-          expect(res.body[0]).to.have.property('first_name');
-          expect(res.body[0]['first_name']).to.equal('newTestUser');
-          expect(res.body[0]).to.have.property('last_name');
-          expect(res.body[0]['last_name']).to.equal('PUTlastTest');
+          expect(res.body[0]).to.include({ 
+           first_name:"newTestUser",
+           last_name:"PUTlastTest",
+           github_id:"33506571",
+           avatar_url:"https://avatars.githubusercontent.com/u/335067571?v=3",
+          });
           done();
         });
     });
@@ -163,15 +193,38 @@ describe('user api routes', () => {
               expect(res.status).to.equal(200);
               expect(res.body).to.be.a('array');
               expect(res.body.length).to.equal(3);
-              expect(res.body[0]).to.be.a('object');
-              expect(res.body[0]).to.have.property('first_name');
-              expect(res.body[0]['first_name']).to.equal('cj');
-              expect(res.body[0]).to.have.property('last_name');
-              expect(res.body[0]['last_name']).to.equal('reynolds');
-              expect(res.body[2]).to.have.property('first_name');
-              expect(res.body[2]['first_name']).to.equal('adam');
-              expect(res.body[2]).to.have.property('last_name');
-              expect(res.body[2]['last_name']).to.equal('lichty');
+              expect(res.body).to.include({ 
+                id: 2,
+                first_name: 'cj',
+                last_name: 'reynolds',
+                github_id: '14241866',
+                avatar_url: 'https://avatars.githubusercontent.com/u/14241866?v=3',
+                email: 'cj.someone@example.com' 
+              });
+              expect(res.body).to.include({ 
+                id: 3,
+                first_name: 'chris',
+                last_name: 'burkhart',
+                github_id: '53454',
+                avatar_url: 'https://avatars.githubusercontent.com/u/53454?v=3',
+                email: 'chris.someone@example.com'
+              });
+              expect(res.body).to.include({ 
+                id: 4,
+                first_name: 'adam',
+                last_name: 'lichty',
+                github_id: '5067571',
+                avatar_url: 'https://avatars.githubusercontent.com/u/5067571?v=3',
+                email: 'adam.someone@example.com' 
+              });
+              expect(res.body).not.to.include({
+                id: 1,
+                first_name: 'lionel',
+                last_name: 'lints',
+                github_id: '13045341',
+                avatar_url: 'https://avatars.githubusercontent.com/u/13045341?v=3',
+                email: 'lionel.lints@gmail.com',
+              });
               done();
             });
         });
