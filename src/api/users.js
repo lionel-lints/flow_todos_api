@@ -40,17 +40,23 @@ export default ({ config, db }) => resource({
   /* PUT /:id - Update a given entity */
   update({ user, body }, res) {
     const updatedUser = {};
+    const returnArray = ['id'];
     const keyArray = Object.keys(body).filter((key) => {
       return key !== 'id';
     });
 
     for (const key of keyArray) {
       updatedUser[key] = body[key];
+      returnArray.push(key);
     }
 
-    user.update(updatedUser).then((returnedUser) => {
-      res.json(returnedUser);
-    });
+    if (body.id !== user.id) {
+      res.status(422).json({ error: 'You cannot update the id field.' });
+    } else {
+      user.returning(returnArray).update(updatedUser).then((returnedUser) => {
+        res.json(returnedUser);
+      });
+    }
   },
 
   /* DELETE /:id - Delete a given entity */
