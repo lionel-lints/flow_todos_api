@@ -9,7 +9,7 @@
     "start": "node dist",
     "prestart": "npm run -s build",
     "lint": "eslint ./src/*",
-    "test":  "NODE_ENV=test mocha --compilers js:babel-core/register ./test/*.js"
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./test/*.js"
   },
   "author": "lionel lints",
   "license": "MIT",

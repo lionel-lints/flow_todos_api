@@ -1,5 +1,6 @@
 import resource from 'resource-router-middleware';
 import users from '../models/users';
+import todos from '../models/todos';
 
 /* eslint-disable no-unused-vars*/
 /* eslint-disable arrow-body-style */
@@ -7,11 +8,12 @@ export default ({ config, db }) => resource({
   /* Property name to store preloaded entity on `request`. */
   id: 'user',
 
+  middleware: todos({ config, db }),
   /* For requests with an `id`, you can auto-load the entity.
    *  Errors terminate the request, success sets `req[id] = data`.
    */
-  load(req, id, callback) {
-    const user = users(db).where({ id });
+  load(req, userId, callback) {
+    const user = users(db).where({ userId });
     const err = user ? null : 'Not found';
     callback(err, user);
   },

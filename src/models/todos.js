@@ -1,5 +1,5 @@
 function Todo(db) {
-  return db('todos');
+  return db('todo');
 }
 
 export default Todo;

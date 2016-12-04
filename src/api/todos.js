@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import users from '../models/users';
+// import users from '../models/users';
 import todos from '../models/todos';
 
 /* eslint-disable no-unused-vars */
@@ -12,10 +12,10 @@ export default ({ config, db }) => resource({
   /* For requests with an `id`, you can auto-load the entity.
    *  Errors terminate the request, success sets `req[id] = data`.
    */
-  load(req, id, userId, callback) {    
-    const user = users(db).where({ userId });
-    const todo = todos(db).where({ id }).andWhere('user', userId);
-    const err = todo && user ? null : 'Not found';
+  load(req, id, callback, userId) {
+    // const user = users(db).where({ userId });
+    const todo = todos(db).where({ id });
+    const err = todo ? null : 'Not found';
     callback(err, todo);
   },
 
